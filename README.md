@@ -73,3 +73,51 @@ Open your favorite web browser and go to:
 ├── package.json            # Node configuration & dependencies
 └── README.md               # You are here!
 ```
+
+---
+
+## 🚀 Deployment on Railway
+
+This project is configured and ready to deploy on [Railway](https://railway.app).
+
+### Prerequisites
+- A Railway account (free tier available)
+- Git repository with your code
+
+### Step-by-Step Deployment
+
+1. **Push your code to GitHub/GitLab**
+   ```bash
+   git add .
+   git commit -m "Prepare for Railway deployment"
+   git push origin main
+   ```
+
+2. **Create a Railway Project**
+   - Go to [https://railway.app](https://railway.app)
+   - Sign in or create an account
+   - Click "New Project" → "Deploy from GitHub"
+   - Select your repository
+
+3. **Configure Environment Variables**
+   - In Railway dashboard, go to your project settings
+   - Add the following variables:
+     - `JWT_SECRET`: Set a secure random string (recommended: use a password generator)
+     - `NODE_ENV`: Set to `production`
+     - `PORT`: Leave empty (Railway will auto-assign)
+
+4. **Deploy**
+   - Railway will automatically detect and deploy your Node.js application
+   - Your app will be live at a Railway-provided URL (e.g., `https://your-app.railway.app`)
+
+### Important Notes
+
+- **Database**: The app uses a file-based JSON database. Data will persist during the application lifetime but may reset on container restarts. For persistent storage, consider migrating to MongoDB or PostgreSQL.
+- **JWT Secret**: Always use a strong, random secret in production. Never commit `.env` files.
+- **CORS**: The application is configured to accept CORS requests. Adjust as needed for security.
+
+### Deployment Files Included
+
+- `Procfile`: Specifies how to run the application on Railway
+- `railway.json`: Railway configuration
+- `.env.example`: Template for environment variables

@@ -7,7 +7,7 @@ const db = require('./db');
 
 const app = express();
 const PORT = process.env.PORT || 3000;
-const JWT_SECRET = 'collabease_secret_key_2026';
+const JWT_SECRET = process.env.JWT_SECRET || 'collabease_secret_key_2026';
 
 // Middleware
 app.use(cors());
