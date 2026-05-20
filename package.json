@@ -3,6 +3,9 @@
   "version": "1.0.0",
   "description": "A clean, soft, and professional project management and task tracking application with role-based access control.",
   "main": "server.js",
+  "engines": {
+    "node": ">=18.0.0"
+  },
   "scripts": {
     "start": "node server.js",
     "dev": "node server.js"

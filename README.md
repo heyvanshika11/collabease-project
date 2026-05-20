@@ -121,3 +121,82 @@ This project is configured and ready to deploy on [Railway](https://railway.app)
 - `Procfile`: Specifies how to run the application on Railway
 - `railway.json`: Railway configuration
 - `.env.example`: Template for environment variables
+
+---
+
+## 🚀 Deployment on Vercel
+
+This project is also configured and ready to deploy on [Vercel](https://vercel.com).
+
+### Prerequisites
+- A Vercel account (free tier available)
+- Git repository with your code on GitHub
+
+### Step-by-Step Deployment
+
+1. **Push your code to GitHub**
+   ```bash
+   git add .
+   git commit -m "Add Vercel deployment configuration"
+   git push origin main
+   ```
+
+2. **Create a Vercel Project**
+   - Go to [https://vercel.com](https://vercel.com)
+   - Sign in with GitHub account
+   - Click **"New Project"**
+   - Select your **`collabease-project`** repository
+   - Click **"Import"**
+
+3. **Configure Build Settings**
+   - **Framework Preset**: Select **Node.js**
+   - **Build Command**: Leave as default (none required)
+   - **Output Directory**: Leave as default
+   - Click **"Deploy"**
+
+4. **Add Environment Variables**
+   - During deployment setup, go to **"Environment Variables"** section
+   - Add the following variables:
+     - `JWT_SECRET`: Set a secure random string
+     - `NODE_ENV`: Set to `production`
+   - Click **"Deploy"**
+
+5. **Wait for Deployment**
+   - Vercel will automatically build and deploy your project
+   - Your app will be live at a Vercel-provided URL (e.g., `https://collabease-project.vercel.app`)
+
+### Important Notes
+
+- **Database**: The app uses a file-based JSON database. On Vercel's serverless environment, data will NOT persist between deployments. For production use with persistent storage:
+  - Connect to MongoDB (Atlas)
+  - Connect to PostgreSQL (Vercel Postgres)
+  - Use Railway's database alongside Vercel hosting
+- **JWT Secret**: Always use a strong, random secret in production
+- **Serverless Functions**: Vercel automatically converts your Express app into serverless functions
+
+### Deployment Files Included
+
+- `vercel.json`: Vercel configuration (builds, routes, environment)
+- `.vercelignore`: Files to exclude from deployment
+- `.env.example`: Template for environment variables
+
+### After Deployment
+
+- Your app is live and accessible via the Vercel URL
+- Any push to `main` branch automatically triggers a new deployment
+- View logs and analytics from the Vercel dashboard
+- Set up custom domain in Vercel project settings
+
+---
+
+## 📋 Deployment Comparison
+
+| Feature | Railway | Vercel |
+|---------|---------|--------|
+| **Setup Time** | 5-10 minutes | 3-5 minutes |
+| **Database** | Supports persistent file storage | Requires external database |
+| **Cost** | Free tier with limits | Free tier with generous limits |
+| **Ease of Use** | Very simple | Extremely simple |
+| **Best For** | Full-stack apps with databases | API-first, serverless apps |
+
+Choose **Railway** if you want simpler database persistence, or **Vercel** if you prefer a serverless architecture with faster deployments.
