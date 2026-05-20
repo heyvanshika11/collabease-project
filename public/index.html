@@ -1,0 +1,640 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>CollabEase | Modern Project & Task Management</title>
+  <!-- Google Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Outfit:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <!-- Lucide Icons CDN -->
+  <script src="https://unpkg.com/lucide@latest"></script>
+  <!-- CSS Stylesheet -->
+  <link rel="stylesheet" href="app.css">
+</head>
+<body class="light-mode">
+  
+  <!-- APP CONTAINER -->
+  <div id="app">
+    
+    <!-- 1. AUTHENTICATION SCREENS -->
+    <div id="auth-screen" class="auth-container hidden">
+      <div class="auth-card">
+        <div class="auth-header">
+          <div class="logo-mark">
+            <i data-lucide="layers" class="logo-icon"></i>
+          </div>
+          <h1>CollabEase</h1>
+          <p class="subtitle" id="auth-subtitle">Seamless, soft-styled project collaboration</p>
+        </div>
+        
+        <!-- Login Form -->
+        <form id="login-form" class="auth-form">
+          <div class="form-group">
+            <label for="login-email">Email Address</label>
+            <div class="input-wrapper">
+              <i data-lucide="mail" class="input-icon"></i>
+              <input type="email" id="login-email" placeholder="sarah.c@collab.com" required autocomplete="email">
+            </div>
+          </div>
+          
+          <div class="form-group">
+            <label for="login-password">Password</label>
+            <div class="input-wrapper">
+              <i data-lucide="lock" class="input-icon"></i>
+              <input type="password" id="login-password" placeholder="••••••••" required autocomplete="current-password">
+            </div>
+          </div>
+          
+          <button type="submit" class="btn btn-primary btn-block">
+            <span>Sign In</span>
+            <i data-lucide="arrow-right" class="btn-icon"></i>
+          </button>
+          
+          <p class="auth-toggle">
+            Don't have an account? <a href="#" id="to-signup">Create one now</a>
+          </p>
+        </form>
+
+        <!-- Signup Form -->
+        <form id="signup-form" class="auth-form hidden">
+          <div class="form-group">
+            <label for="signup-name">Full Name</label>
+            <div class="input-wrapper">
+              <i data-lucide="user" class="input-icon"></i>
+              <input type="text" id="signup-name" placeholder="John Doe" autocomplete="name">
+            </div>
+          </div>
+
+          <div class="form-group">
+            <label for="signup-email">Email Address</label>
+            <div class="input-wrapper">
+              <i data-lucide="mail" class="input-icon"></i>
+              <input type="email" id="signup-email" placeholder="john.d@collab.com" autocomplete="email">
+            </div>
+          </div>
+          
+          <div class="form-group">
+            <label for="signup-password">Password</label>
+            <div class="input-wrapper">
+              <i data-lucide="lock" class="input-icon"></i>
+              <input type="password" id="signup-password" placeholder="At least 6 characters" autocomplete="new-password">
+            </div>
+          </div>
+          
+          <button type="submit" class="btn btn-primary btn-block">
+            <span>Create Account</span>
+            <i data-lucide="user-plus" class="btn-icon"></i>
+          </button>
+          
+          <p class="auth-toggle">
+            Already have an account? <a href="#" id="to-login">Sign in instead</a>
+          </p>
+        </form>
+
+        <!-- Credentials Helper Tip -->
+        <div class="demo-tip">
+          <div class="demo-tip-header">
+            <i data-lucide="help-circle"></i>
+            <span>Demo Access Credentials</span>
+          </div>
+          <div class="demo-credentials">
+            <div><strong>Admin:</strong> <code>sarah.c@collab.com</code> | <code>password123</code></div>
+            <div><strong>Member:</strong> <code>john.d@collab.com</code> | <code>password123</code></div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- 2. MAIN APP SHELL -->
+    <div id="main-shell" class="shell-container hidden">
+      <!-- SIDEBAR -->
+      <aside class="sidebar">
+        <div class="sidebar-brand">
+          <div class="logo-mark">
+            <i data-lucide="layers" class="logo-icon"></i>
+          </div>
+          <span class="brand-name">CollabEase</span>
+        </div>
+        
+        <nav class="sidebar-nav">
+          <a href="#dashboard" class="nav-item active" id="nav-dashboard">
+            <i data-lucide="grid"></i>
+            <span>Dashboard</span>
+          </a>
+          <a href="#projects" class="nav-item" id="nav-projects">
+            <i data-lucide="folder"></i>
+            <span>Projects</span>
+          </a>
+          <a href="#my-tasks" class="nav-item" id="nav-mytasks">
+            <i data-lucide="check-square"></i>
+            <span>My Tasks</span>
+          </a>
+        </nav>
+
+        <div class="sidebar-footer">
+          <div class="user-profile-badge">
+            <img src="" id="user-avatar" class="avatar" alt="User Avatar">
+            <div class="user-details">
+              <div class="user-name" id="user-full-name">User Name</div>
+              <div class="user-email" id="user-email-address">email@collab.com</div>
+            </div>
+          </div>
+          <button class="btn-logout" id="logout-btn" title="Logout">
+            <i data-lucide="log-out"></i>
+            <span>Sign Out</span>
+          </button>
+        </div>
+      </aside>
+
+      <!-- MAIN CONTENT AREA -->
+      <main class="content-area">
+        <!-- TOPBAR -->
+        <header class="topbar">
+          <div class="topbar-left">
+            <button class="mobile-sidebar-toggle" id="mobile-menu-btn" aria-label="Toggle Sidebar">
+              <i data-lucide="menu"></i>
+            </button>
+            <h1 class="page-title" id="current-page-title">Dashboard</h1>
+          </div>
+          <div class="topbar-right">
+            <!-- Theme Toggle / Soft Action Pill -->
+            <button class="theme-toggle" id="theme-btn" title="Toggle Theme">
+              <i data-lucide="moon" id="theme-icon"></i>
+            </button>
+            <span class="date-badge" id="live-date">May 20, 2026</span>
+          </div>
+        </header>
+
+        <!-- ROUTED VIEWS -->
+        <div class="view-viewport">
+          
+          <!-- VIEW A: DASHBOARD -->
+          <section id="view-dashboard" class="view-pane">
+            <!-- STATS COUNTERS -->
+            <div class="stats-grid">
+              <div class="stat-card total">
+                <div class="stat-header">
+                  <span class="stat-label">Active Projects</span>
+                  <div class="stat-icon-bg indigo">
+                    <i data-lucide="folder-kanban"></i>
+                  </div>
+                </div>
+                <div class="stat-value" id="stat-projects">0</div>
+                <div class="stat-footer text-muted">Projects assigned to you</div>
+              </div>
+              
+              <div class="stat-card todo">
+                <div class="stat-header">
+                  <span class="stat-label">Tasks Pending</span>
+                  <div class="stat-icon-bg orange">
+                    <i data-lucide="clock"></i>
+                  </div>
+                </div>
+                <div class="stat-value" id="stat-tasks-pending">0</div>
+                <div class="stat-footer text-muted">To Do + In Progress + Review</div>
+              </div>
+
+              <div class="stat-card completed">
+                <div class="stat-header">
+                  <span class="stat-label">Completed</span>
+                  <div class="stat-icon-bg green">
+                    <i data-lucide="check-circle2"></i>
+                  </div>
+                </div>
+                <div class="stat-value" id="stat-tasks-completed">0</div>
+                <div class="stat-footer" id="stat-completion-rate">0% completion rate</div>
+              </div>
+
+              <div class="stat-card overdue text-danger">
+                <div class="stat-header">
+                  <span class="stat-label">Overdue Tasks</span>
+                  <div class="stat-icon-bg red">
+                    <i data-lucide="alert-triangle"></i>
+                  </div>
+                </div>
+                <div class="stat-value" id="stat-tasks-overdue">0</div>
+                <div class="stat-footer" id="stat-overdue-subtitle">Past due dates</div>
+              </div>
+            </div>
+
+            <!-- DASHBOARD DOUBLE COLUMN LAYOUT -->
+            <div class="dashboard-columns">
+              <!-- Left Column: Tasks Progress and Charts -->
+              <div class="dashboard-col flex-2">
+                <div class="card-section">
+                  <div class="section-header">
+                    <h2>Task Progress Overview</h2>
+                  </div>
+                  <div class="chart-container-placeholder">
+                    <!-- Beautiful SVG-based visually soft progress circle indicator -->
+                    <div class="progress-ring-container">
+                      <svg class="progress-ring" width="160" height="160">
+                        <circle class="progress-ring__circle-bg" stroke="#f1f3f9" stroke-width="12" fill="transparent" r="70" cx="80" cy="80"/>
+                        <circle class="progress-ring__circle" stroke="var(--primary)" stroke-width="12" stroke-linecap="round" fill="transparent" r="70" cx="80" cy="80"/>
+                      </svg>
+                      <div class="progress-ring-text">
+                        <span class="percent" id="ring-percent">0%</span>
+                        <span class="label">Completed</span>
+                      </div>
+                    </div>
+                    <div class="progress-details-list">
+                      <div class="progress-detail-item">
+                        <span class="dot bg-slate"></span>
+                        <span class="status-name">To Do</span>
+                        <span class="count" id="count-todo">0</span>
+                      </div>
+                      <div class="progress-detail-item">
+                        <span class="dot bg-orange"></span>
+                        <span class="status-name">In Progress</span>
+                        <span class="count" id="count-inprogress">0</span>
+                      </div>
+                      <div class="progress-detail-item">
+                        <span class="dot bg-indigo"></span>
+                        <span class="status-name">In Review</span>
+                        <span class="count" id="count-inreview">0</span>
+                      </div>
+                      <div class="progress-detail-item">
+                        <span class="dot bg-green"></span>
+                        <span class="status-name">Completed</span>
+                        <span class="count" id="count-completed">0</span>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              <!-- Right Column: My Quick Actions and Notifications -->
+              <div class="dashboard-col flex-3">
+                <div class="card-section">
+                  <div class="section-header">
+                    <h2>Overdue & Urgent Tasks</h2>
+                    <span class="badge badge-danger-soft" id="urgent-badge">0 Attention Required</span>
+                  </div>
+                  <div class="simple-list overflow-y" id="urgent-tasks-list">
+                    <!-- Dynamic Urgent Items -->
+                    <div class="empty-state-placeholder py-3">
+                      <i data-lucide="smile"></i>
+                      <p>All clean! No overdue tasks.</p>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </section>
+
+          <!-- VIEW B: PROJECTS GRID -->
+          <section id="view-projects" class="view-pane hidden">
+            <div class="actions-bar">
+              <p class="description">Select a project to manage its boards, members, and roles.</p>
+              <button class="btn btn-primary" id="btn-new-project">
+                <i data-lucide="plus"></i>
+                <span>New Project</span>
+              </button>
+            </div>
+            
+            <div class="projects-grid" id="projects-list-container">
+              <!-- Dynamic Project Cards -->
+            </div>
+          </section>
+
+          <!-- VIEW C: MY TASKS (LIST VIEW) -->
+          <section id="view-mytasks" class="view-pane hidden">
+            <div class="actions-bar filter-bar">
+              <div class="filter-group">
+                <label for="filter-mytasks-status"><i data-lucide="filter"></i> Status</label>
+                <select id="filter-mytasks-status">
+                  <option value="All">All Statuses</option>
+                  <option value="To Do">To Do</option>
+                  <option value="In Progress">In Progress</option>
+                  <option value="In Review">In Review</option>
+                  <option value="Completed">Completed</option>
+                </select>
+              </div>
+              <div class="filter-group">
+                <label for="filter-mytasks-priority"><i data-lucide="sliders"></i> Priority</label>
+                <select id="filter-mytasks-priority">
+                  <option value="All">All Priorities</option>
+                  <option value="High">High</option>
+                  <option value="Medium">Medium</option>
+                  <option value="Low">Low</option>
+                </select>
+              </div>
+            </div>
+
+            <div class="tasks-table-card">
+              <div class="tasks-list-container" id="my-tasks-list-container">
+                <!-- Dynamic Personal Task Rows -->
+              </div>
+            </div>
+          </section>
+
+          <!-- VIEW D: PROJECT DETAILS (KANBAN BOARD & MEMBERS) -->
+          <section id="view-project-details" class="view-pane hidden">
+            <!-- Project Overview Header Header -->
+            <div class="project-header-panel">
+              <div class="project-title-area">
+                <a href="#projects" class="back-link"><i data-lucide="chevron-left"></i> Back to Projects</a>
+                <div class="project-title-row">
+                  <h2 id="project-title-name">Project Title</h2>
+                  <span class="role-pill" id="project-my-role-badge">Admin</span>
+                </div>
+                <p class="project-desc" id="project-title-desc">Project Description</p>
+              </div>
+              <div class="project-metadata-pills">
+                <div class="meta-pill">
+                  <i data-lucide="calendar"></i>
+                  <span>Due: <strong id="project-due-date">Jun 10, 2026</strong></span>
+                </div>
+                <div class="meta-pill">
+                  <i data-lucide="users"></i>
+                  <span id="project-member-count-pill">0 Members</span>
+                </div>
+              </div>
+            </div>
+
+            <!-- TABS NAVIGATION -->
+            <div class="tab-container">
+              <button class="tab-btn active" id="tab-tasks">
+                <i data-lucide="kanban"></i>
+                <span>Task Board</span>
+              </button>
+              <button class="tab-btn" id="tab-members">
+                <i data-lucide="users-2"></i>
+                <span>Team & Members</span>
+              </button>
+            </div>
+
+            <!-- TAB PANE 1: KANBAN BOARD -->
+            <div class="tab-pane" id="pane-tasks">
+              <div class="kanban-action-bar">
+                <div class="kanban-filters">
+                  <input type="text" id="kanban-search" placeholder="Search tasks..." class="search-input">
+                </div>
+                <button class="btn btn-primary" id="btn-add-task">
+                  <i data-lucide="plus"></i>
+                  <span>Add Task</span>
+                </button>
+              </div>
+
+              <!-- Kanban board lanes -->
+              <div class="kanban-board">
+                <!-- Lane 1: To Do -->
+                <div class="kanban-column" data-status="To Do">
+                  <div class="column-header">
+                    <span class="dot bg-slate"></span>
+                    <h3>To Do</h3>
+                    <span class="column-count" id="count-lane-todo">0</span>
+                  </div>
+                  <div class="column-cards" id="lane-todo"></div>
+                </div>
+
+                <!-- Lane 2: In Progress -->
+                <div class="kanban-column" data-status="In Progress">
+                  <div class="column-header">
+                    <span class="dot bg-orange"></span>
+                    <h3>In Progress</h3>
+                    <span class="column-count" id="count-lane-inprogress">0</span>
+                  </div>
+                  <div class="column-cards" id="lane-inprogress"></div>
+                </div>
+
+                <!-- Lane 3: In Review -->
+                <div class="kanban-column" data-status="In Review">
+                  <div class="column-header">
+                    <span class="dot bg-indigo"></span>
+                    <h3>In Review</h3>
+                    <span class="column-count" id="count-lane-inreview">0</span>
+                  </div>
+                  <div class="column-cards" id="lane-inreview"></div>
+                </div>
+
+                <!-- Lane 4: Completed -->
+                <div class="kanban-column" data-status="Completed">
+                  <div class="column-header">
+                    <span class="dot bg-green"></span>
+                    <h3>Completed</h3>
+                    <span class="column-count" id="count-lane-completed">0</span>
+                  </div>
+                  <div class="column-cards" id="lane-completed"></div>
+                </div>
+              </div>
+            </div>
+
+            <!-- TAB PANE 2: MEMBERS MANAGEMENT -->
+            <div class="tab-pane hidden" id="pane-members">
+              <div class="members-layout">
+                <!-- Members list -->
+                <div class="members-list-card flex-3">
+                  <div class="card-header">
+                    <h3>Project Team</h3>
+                  </div>
+                  <div class="members-table-wrapper">
+                    <table class="members-table">
+                      <thead>
+                        <tr>
+                          <th>Team Member</th>
+                          <th>Role</th>
+                          <th>Joined</th>
+                          <th class="text-right actions-th">Actions</th>
+                        </tr>
+                      </thead>
+                      <tbody id="project-members-table-body">
+                        <!-- Dynamic member rows -->
+                      </tbody>
+                    </table>
+                  </div>
+                </div>
+
+                <!-- Invite member panel (Only for admins) -->
+                <div class="invite-member-card flex-2" id="invite-member-section">
+                  <div class="card-header">
+                    <h3>Invite Team Member</h3>
+                  </div>
+                  <form id="invite-member-form" class="card-form">
+                    <p class="form-instructions text-muted">Invite an existing user to collaborate on this project.</p>
+                    
+                    <div class="form-group">
+                      <label for="invite-email">User Email</label>
+                      <div class="input-wrapper">
+                        <i data-lucide="mail"></i>
+                        <input type="email" id="invite-email" placeholder="john.d@collab.com" required>
+                      </div>
+                    </div>
+                    
+                    <div class="form-group">
+                      <label for="invite-role">Access Role</label>
+                      <div class="select-wrapper">
+                        <select id="invite-role">
+                          <option value="Member">Member (View & edit assigned tasks)</option>
+                          <option value="Admin">Admin (Full project configuration)</option>
+                        </select>
+                      </div>
+                    </div>
+
+                    <button type="submit" class="btn btn-primary btn-block">
+                      <i data-lucide="user-plus"></i>
+                      <span>Add to Project</span>
+                    </button>
+                  </form>
+                </div>
+              </div>
+            </div>
+          </section>
+
+        </div>
+      </main>
+    </div>
+
+  </div>
+
+  <!-- ─── MODALS ────────────────────────────────────────────────── -->
+
+  <!-- A. NEW PROJECT MODAL -->
+  <div class="modal-backdrop hidden" id="modal-project">
+    <div class="modal-card">
+      <div class="modal-header">
+        <h3>Create New Project</h3>
+        <button class="modal-close" id="btn-close-project-modal"><i data-lucide="x"></i></button>
+      </div>
+      <form id="project-form" class="modal-body">
+        <div class="form-group">
+          <label for="project-name">Project Name <span class="required">*</span></label>
+          <input type="text" id="project-name" placeholder="e.g. Website Redesign" required>
+        </div>
+        <div class="form-group">
+          <label for="project-desc">Description</label>
+          <textarea id="project-desc" rows="3" placeholder="Provide a brief summary of the project goals..."></textarea>
+        </div>
+        <div class="form-group">
+          <label for="project-due">Target Deadline</label>
+          <input type="date" id="project-due">
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-outline" id="btn-cancel-project">Cancel</button>
+          <button type="submit" class="btn btn-primary">Create Project</button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <!-- B. NEW TASK MODAL -->
+  <div class="modal-backdrop hidden" id="modal-task">
+    <div class="modal-card">
+      <div class="modal-header">
+        <h3>Create New Task</h3>
+        <button class="modal-close" id="btn-close-task-modal"><i data-lucide="x"></i></button>
+      </div>
+      <form id="task-form" class="modal-body">
+        <div class="form-group">
+          <label for="task-title">Task Title <span class="required">*</span></label>
+          <input type="text" id="task-title" placeholder="e.g. Implement middleware routes" required>
+        </div>
+        
+        <div class="form-group">
+          <label for="task-desc">Description</label>
+          <textarea id="task-desc" rows="3" placeholder="Detail the task steps or specifications..."></textarea>
+        </div>
+
+        <div class="form-row">
+          <div class="form-group flex-1">
+            <label for="task-priority">Priority</label>
+            <select id="task-priority">
+              <option value="Low">Low</option>
+              <option value="Medium" selected>Medium</option>
+              <option value="High">High</option>
+            </select>
+          </div>
+          <div class="form-group flex-1">
+            <label for="task-due">Due Date</label>
+            <input type="date" id="task-due" required>
+          </div>
+        </div>
+
+        <div class="form-group">
+          <label for="task-assignee">Assignee</label>
+          <select id="task-assignee">
+            <!-- Dynamic members injected -->
+          </select>
+        </div>
+
+        <div class="modal-footer">
+          <button type="button" class="btn btn-outline" id="btn-cancel-task">Cancel</button>
+          <button type="submit" class="btn btn-primary">Create Task</button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <!-- C. TASK DETAILS & COMMENTS DRAWER -->
+  <div class="drawer-backdrop hidden" id="drawer-task-details">
+    <div class="drawer-panel">
+      <div class="drawer-header">
+        <div class="drawer-title-group">
+          <span class="badge" id="drawer-task-priority">Medium</span>
+          <h3 id="drawer-task-title">Task Title</h3>
+        </div>
+        <button class="drawer-close" id="btn-close-drawer"><i data-lucide="x"></i></button>
+      </div>
+      
+      <div class="drawer-body">
+        
+        <!-- Task Info Section -->
+        <div class="drawer-info-grid">
+          <div class="info-block">
+            <span class="info-label">Assigned To</span>
+            <div class="info-user-badge">
+              <img src="" id="drawer-assignee-avatar" class="avatar" alt="Assignee">
+              <span id="drawer-assignee-name">John Doe</span>
+            </div>
+          </div>
+          <div class="info-block">
+            <span class="info-label">Due Date</span>
+            <span class="info-text-date" id="drawer-task-due">May 30, 2026</span>
+          </div>
+          <div class="info-block span-2">
+            <span class="info-label">Task Status</span>
+            <div class="status-selector-wrapper">
+              <select id="drawer-task-status-select" class="status-select">
+                <option value="To Do">To Do</option>
+                <option value="In Progress">In Progress</option>
+                <option value="In Review">In Review</option>
+                <option value="Completed">Completed</option>
+              </select>
+              <span class="status-permission-hint" id="status-permission-hint">Only assignees or admins can update status.</span>
+            </div>
+          </div>
+        </div>
+
+        <div class="drawer-section">
+          <h4>Description</h4>
+          <p class="drawer-desc" id="drawer-task-desc">Task description goes here...</p>
+        </div>
+
+        <hr class="drawer-divider">
+
+        <!-- Comments Section -->
+        <div class="drawer-section comments-section">
+          <h4>Discussion (<span id="drawer-comment-count">0</span>)</h4>
+          
+          <div class="comments-list" id="drawer-comments-list">
+            <!-- Dynamic comments list -->
+          </div>
+
+          <form id="comment-form" class="comment-input-area">
+            <input type="text" id="comment-input" placeholder="Type a comment..." required>
+            <button type="submit" class="btn btn-primary btn-sm">
+              <i data-lucide="send"></i>
+            </button>
+          </form>
+        </div>
+
+      </div>
+    </div>
+  </div>
+
+  <!-- Client-side Router and UI Engine -->
+  <script src="app.js"></script>
+</body>
+</html>
